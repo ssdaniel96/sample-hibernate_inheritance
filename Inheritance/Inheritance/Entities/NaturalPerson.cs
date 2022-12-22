@@ -2,6 +2,6 @@
 {
     public class NaturalPerson : Person
     {
-        public DateOnly BirthDate { get; set; }
+        public DateTime Birthdate { get; set; }
     }
 }

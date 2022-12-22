@@ -1,3 +1,4 @@
+using Inheritance.Entities;
 using NHibernate;
 using NhEnv = NHibernate.Cfg.Environment;
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(svc =>
 {
     var cfg = new NHibernate.Cfg.Configuration();
+    cfg.Properties[NhEnv.Dialect] = typeof(NHibernate.Dialect.MsSql2008Dialect).AssemblyQualifiedName;
     cfg.Properties[NhEnv.ConnectionProvider] =
         typeof(NHibernate.Connection.DriverConnectionProvider).AssemblyQualifiedName;
     cfg.Properties[NhEnv.ConnectionString] = builder.Configuration.GetConnectionString("Default");
@@ -20,13 +22,13 @@ builder.Services.AddSingleton(svc =>
     return factory;
 });
 
-builder.Services.AddScoped(svc =>
+builder.Services.AddSingleton(svc =>
 {
     var session = svc.GetRequiredService<ISessionFactory>().OpenSession();
     return session;
 });
 
-builder.Services.AddScoped(svc =>
+builder.Services.AddSingleton(svc =>
 {
     var session = svc.GetRequiredService<ISessionFactory>().OpenStatelessSession();
     return session;
@@ -35,6 +37,15 @@ builder.Services.AddScoped(svc =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () =>
+{
+    var dbSession = app.Services.GetRequiredService<NHibernate.ISession>();
+
+    var query = dbSession.Query<Person>();
+
+    var list = query.ToList();
+
+    return list;
+});
 
 app.Run();

@@ -11,15 +11,15 @@
 		<!--http://nhibernate.info/doc/nhibernate-reference/inheritance.html-->
 
 		<!--<discriminator column="PersonTypeId" not-null="true" type="AnsiString"/>-->
-		<discriminator column="PersonTypeId" not-null="true" type="int"/>
+		<discriminator column="TypeId" not-null="true" type="AnsiString"/>
 
 		<property    name="Name"				 column="Name"           type="AnsiString" />
-		<property    name="TypeEnum"			 column="TypeId"         type="PersonTypeEnum"/>
+		<property    name="TypeEnum"			 column="TypeId"         type="PersonTypeEnum" insert="false" update="false"/>
 
 		<subclass name="NaturalPerson" discriminator-value="1">
 			<join table="NaturalPerson">
 				<key column="Id"/>
-				<property    name="BirthDate"               column="BirthDate"                 type="DateTime"/>
+				<property    name="Birthdate"               column="BirthDate"                 type="Date"/>
 			</join>
 		</subclass>
 
