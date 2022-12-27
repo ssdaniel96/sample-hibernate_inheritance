@@ -5,16 +5,26 @@
                    default-lazy="false" default-cascade="none">
 	<class name="Person" table="Person">
 		<id name="Id" column="Id" type="int" >
-			<generator class="native" />
 		</id>
 
 		<!--http://nhibernate.info/doc/nhibernate-reference/inheritance.html-->
 
-		<!--<discriminator column="PersonTypeId" not-null="true" type="AnsiString"/>-->
 		<discriminator column="TypeId" not-null="true" type="AnsiString"/>
 
 		<property    name="Name"				 column="Name"           type="AnsiString" />
 		<property    name="TypeEnum"			 column="TypeId"         type="PersonTypeEnum" insert="false" update="false"/>
+		<!--<property    name="TypeEnum"			 column="TypeId"         type="PersonTypeEnum"/>-->
+
+		<!--<joined-subclass name="NaturalPerson">
+			<key column="Id"/>
+			<property    name="Birthdate"               column="BirthDate"                 type="Date"/>
+		</joined-subclass>
+
+		<joined-subclass name="JuridicalPerson">
+			<key column="Id"/>
+			<property    name="Description"               column="Description"                 type="AnsiString"/>
+		</joined-subclass>-->
+
 
 		<subclass name="NaturalPerson" discriminator-value="1">
 			<join table="NaturalPerson">
@@ -29,6 +39,13 @@
 				<property name="Description"                        column="Description"                       type="AnsiString"/>
 			</join>
 		</subclass>
-
 	</class>
+
+	<!--<class name="NaturalPerson" table="NaturalPerson" extends="Person">
+		<id name="Id" column="Id" type="int" >
+			<generator class="foreign" />
+		</id>
+		<property    name="Birthdate"               column="BirthDate"                 type="Date"/>
+			
+	</class>-->
 </hibernate-mapping>

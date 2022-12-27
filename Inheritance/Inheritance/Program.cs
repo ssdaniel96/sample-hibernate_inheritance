@@ -1,3 +1,4 @@
+using Inheritance.Dtos;
 using Inheritance.Entities;
 using NHibernate;
 using NhEnv = NHibernate.Cfg.Environment;
@@ -45,7 +46,7 @@ app.MapGet("/", () =>
 
     var list = query.ToList();
 
-    return list;
+    return list.Select(p => new PersonDto(p));
 });
 
 app.Run();
