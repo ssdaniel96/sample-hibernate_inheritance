@@ -16,13 +16,13 @@ public class PersonDto
         Name = person.Name;
         TypeEnum = person.TypeEnum;
 
-        if (person.GetType() == typeof(NaturalPerson))
+        if (person is NaturalPerson @naturalPerson)
         {
-            Birthdate = (person as NaturalPerson)!.Birthdate;
+            Birthdate = naturalPerson.Birthdate;
         }
-        else if (person.GetType() == typeof(JuridicalPerson))
+        else if (person is JuridicalPerson @juridicalPerson)
         {
-            Description = (person as JuridicalPerson)!.Description;
+            Description = juridicalPerson.Description;
         }
     }
 

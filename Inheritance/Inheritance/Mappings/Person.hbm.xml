@@ -13,18 +13,6 @@
 
 		<property    name="Name"				 column="Name"           type="AnsiString" />
 		<property    name="TypeEnum"			 column="TypeId"         type="PersonTypeEnum" insert="false" update="false"/>
-		<!--<property    name="TypeEnum"			 column="TypeId"         type="PersonTypeEnum"/>-->
-
-		<!--<joined-subclass name="NaturalPerson">
-			<key column="Id"/>
-			<property    name="Birthdate"               column="BirthDate"                 type="Date"/>
-		</joined-subclass>
-
-		<joined-subclass name="JuridicalPerson">
-			<key column="Id"/>
-			<property    name="Description"               column="Description"                 type="AnsiString"/>
-		</joined-subclass>-->
-
 
 		<subclass name="NaturalPerson" discriminator-value="1">
 			<join table="NaturalPerson">
@@ -41,11 +29,4 @@
 		</subclass>
 	</class>
 
-	<!--<class name="NaturalPerson" table="NaturalPerson" extends="Person">
-		<id name="Id" column="Id" type="int" >
-			<generator class="foreign" />
-		</id>
-		<property    name="Birthdate"               column="BirthDate"                 type="Date"/>
-			
-	</class>-->
 </hibernate-mapping>
